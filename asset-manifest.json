@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/amit-vinove/MeetAll/static/css/main.88eef8a1.css",
+    "main.js": "/amit-vinove/MeetAll/static/js/main.24957c5d.js",
+    "static/media/vinoveBg.jpg": "/amit-vinove/MeetAll/static/media/vinoveBg.d8f001f210e0bdbfc16a.jpg",
+    "static/media/2474247.jpg": "/amit-vinove/MeetAll/static/media/2474247.fc0547fdf25609357950.jpg",
+    "static/media/logo.jpg": "/amit-vinove/MeetAll/static/media/logo.d069ade12ae8bf557ca3.jpg",
+    "static/media/inboxImg.svg": "/amit-vinove/MeetAll/static/media/inboxImg.845518830b0fb58666729875ee54f444.svg",
+    "static/media/defaultPost.svg": "/amit-vinove/MeetAll/static/media/defaultPost.0d04e11f43e0a351d73299e80a4ef26a.svg",
+    "index.html": "/amit-vinove/MeetAll/index.html",
+    "main.88eef8a1.css.map": "/amit-vinove/MeetAll/static/css/main.88eef8a1.css.map",
+    "main.24957c5d.js.map": "/amit-vinove/MeetAll/static/js/main.24957c5d.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.88eef8a1.css",
+    "static/js/main.24957c5d.js"
+  ]
+}
