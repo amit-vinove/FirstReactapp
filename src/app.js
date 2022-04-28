@@ -23,7 +23,6 @@ function RequireAuth({ children, redirectTo }) {
   let isAuthenticated = getAuth();
   return isAuthenticated ? children : <Navigate to={redirectTo} />;
 }
-
 function App() {
   const loggedUsername = localStorage.getItem("User");
   return (
@@ -74,10 +73,8 @@ function App() {
       <Routes>
         <Route
           path="/todo"
-          element={
-            <RequireAuth redirectTo="/">
-              <TodoPage />
-            </RequireAuth>
+          element={              
+          <TodoPage />
           }
         />
       </Routes>
