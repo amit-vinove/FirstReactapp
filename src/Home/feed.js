@@ -6,10 +6,17 @@ import homeCss from "../css/home.css";
 import Sidebar from "../navBar/sidebar";
 import Card from "react-bootstrap/Card";
 import defaultPost from "../images/defaultPost.svg";
+import { listTodos } from "../Redux/Actions/todosActions";
+import { useDispatch, useSelector } from "react-redux";
 
 function Feeds() {
   const [feed, setFeeds] = useState("");
   const [feedsDB, setFeedsDB] = useState([]);
+  const dispatch =useDispatch();
+  const  username = localStorage.getItem("User");
+  const todos = useSelector(
+    (state) => state.rootReducer
+  );
   console.log(feedsDB.length);
 
   var feedBox = document.getElementById("feedBox")
@@ -20,7 +27,12 @@ function Feeds() {
     setFeedsDB(obj);
     e.target.reset();
   };
-
+  
+  useEffect(() => {
+   dispatch(listTodos(username));
+  }, [])
+  
+console.log(todos);
   return (
     <>
       <div className="container" style={{ padding: "20px" }}>

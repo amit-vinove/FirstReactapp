@@ -20,60 +20,69 @@ function TodoPage() {
   const [todosDB, setTodosDB] = useState([]);
   const [style, setTodoStyle] = useState("todoStyle");
 
- const handleSubmit = (e)=>{
-   const username = localStorage.getItem('User')
-   e.preventDefault();
-   let todoData={
-     "todoId":0,
-     "todoName":todo,
-     "userId" :0,
-     "username":username
-   }
-   axios.post("http://localhost:5032/api/Todo/AddTodo",todoData)
-   .then(res=>{
-     const data = res
-     console.log(data)
+  const handleSubmit = (e) => {
+    const username = localStorage.getItem("User");
     e.preventDefault();
-    let obj = [...todosDB];
-    obj.push(res.data);
-    setTodosDB(obj);
-    e.target.reset();
-   })
-   .catch(err => console.log(err));
- }
- 
- useEffect(()=>{
-   const username = localStorage.getItem('User')
-   axios.get(`http://localhost:5032/api/Todo/GetTodoByUsername?username=${username}`).then((response)=>{
-    setTodosDB(response.data)
-   })
- },[])
- console.log(todosDB)
+    let todoData = {
+      todoId: 0,
+      todoName: todo,
+      userId: 0,
+      username: username,
+    };
+    axios
+      .post("http://localhost:5032/api/Todo/AddTodo", todoData)
+      .then((res) => {
+        const data = res;
+        console.log(data);
+        e.preventDefault();
+        let obj = [...todosDB];
+        obj.push(res.data);
+        setTodosDB(obj);
+        e.target.reset();
+      })
+      .catch((err) => console.log(err));
+  };
 
- const handleDelete = (todoId)=>{
-  axios.delete(`http://localhost:5032/api/Todo/DeleteTodo?todoId=${todoId}`).then((response)=>{
-    console.log(response)
-    let dataDB = [...todosDB]
-    const filtered = dataDB.filter((item)=>item.todoId !== todoId);
-    setTodosDB(filtered)
-    // console.log(filtered)
-  })
- }
+  useEffect(() => {
+    const username = localStorage.getItem("User");
+    axios
+      .get(
+        `http://localhost:5032/api/Todo/GetTodoByUsername?username=${username}`
+      )
+      .then((response) => {
+        setTodosDB(response.data);
+      });
+  }, []);
+  console.log(todosDB);
 
- const todoChecked = (todoId,checked) =>{
-   if(checked == true){
-     var check = false
-   }
-   else{
-     check = true
-   }
-   axios.put(`http://localhost:5032/api/Todo/CheckTodo?checkTodo=${check}&todoId=${todoId}`).then((response)=>{
-     var todos = response.data.data
-     setTodosDB(todos)
-    //  console.log(todos)
-   })
- }
-  
+  const handleDelete = (todoId) => {
+    axios
+      .delete(`http://localhost:5032/api/Todo/DeleteTodo?todoId=${todoId}`)
+      .then((response) => {
+        console.log(response);
+        let dataDB = [...todosDB];
+        const filtered = dataDB.filter((item) => item.todoId !== todoId);
+        setTodosDB(filtered);
+        // console.log(filtered)
+      });
+  };
+
+  const todoChecked = (todoId, checked) => {
+    if (checked == true) {
+      var check = false;
+    } else {
+      check = true;
+    }
+    axios
+      .put(
+        `http://localhost:5032/api/Todo/CheckTodo?checkTodo=${check}&todoId=${todoId}`
+      )
+      .then((response) => {
+        var todos = response.data.data;
+        setTodosDB(todos);
+        //  console.log(todos)
+      });
+  };
 
   return (
     <>
@@ -102,7 +111,8 @@ function TodoPage() {
                         rows={3}
                       />
                     </Form.Group>
-                    <Button onSubmit={handleSubmit}
+                    <Button
+                      onSubmit={handleSubmit}
                       variant="primary"
                       style={{
                         float: "right",
@@ -144,21 +154,30 @@ function TodoPage() {
                     <Card.Body>
                       <div className="row">
                         <div className="col-md-10">
-                          <h4 className={data.checked?"todoStyleChecked":style}> {data.todoName} </h4>
+                          <h4
+                            className={
+                              data.checked ? "todoStyleChecked" : style
+                            }
+                          >
+                            {" "}
+                            {data.todoName}{" "}
+                          </h4>
                         </div>
                         <div className="col-md-1">
                           <Button
                             style={{ float: "right" }}
                             variant="primary"
                             type="button"
-                            onClick={()=>todoChecked(data.todoId , data.checked)}
+                            onClick={() =>
+                              todoChecked(data.todoId, data.checked)
+                            }
                           >
-                            <CheckSquareFill/>
+                            <CheckSquareFill />
                           </Button>
-                          </div>
-                          <div className="col-md-1">
+                        </div>
+                        <div className="col-md-1">
                           <Button
-                            onClick={()=>handleDelete(data.todoId)}
+                            onClick={() => handleDelete(data.todoId)}
                             variant="danger"
                             type="button"
                           >

@@ -9,6 +9,7 @@ import indexCss from "./css/index.css";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import EmployeePage from "./Employee/employee";
 import TeamsPage from "./Teams/teams";
+import AvatarPage from "./Todo/avatarBar";
 
 function getAuth() {
   const loggedIn = localStorage.getItem("LoggedIn");
@@ -75,6 +76,14 @@ function App() {
           path="/todo"
           element={              
           <TodoPage />
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/avatarPage"
+          element={              
+          <AvatarPage />
           }
         />
       </Routes>

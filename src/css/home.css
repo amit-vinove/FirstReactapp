@@ -9,3 +9,29 @@
     color: grey;
     font-weight: 400;
 }
+
+.av{
+    float: right;
+    background-color: #0d46b7;
+    text-align: center;
+    border-radius: 50%;
+    width: fit-content;
+    padding: 8px;
+    color: white;
+    line-height: 1.2;
+}
+.select{
+    display:flex !important;
+    padding: 3px;
+}
+.select:hover{
+    background-color: rgb(20, 127, 220);
+    cursor:pointer;
+    color: white;
+}
+.tag{
+    background-color: aqua;
+    padding: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}

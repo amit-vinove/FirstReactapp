@@ -14,6 +14,9 @@ import {
   PencilSquare,
   CheckSquareFill,
 } from "react-bootstrap-icons";
+import TodoList from "./todoList";
+import { listTodos } from "../Redux/Actions/todosActions";
+import { useDispatch, useSelector } from "react-redux";
 
 class TodoPage extends React.Component {
   constructor(props) {
@@ -70,21 +73,22 @@ class TodoPage extends React.Component {
     }
   };
 
-  handleDelete = (e,todoId)=>{
-    console.log(todoId)
-    axios.delete(`http://localhost:5032/api/Todo/DeleteTodo?todoId=${todoId}`)
-    .then(res=>{
-      console.log(res)
-      let dataDB = [...this.state.todos]
-      const filtered = dataDB.filter((item)=>item.todoId !== todoId)
-      this.setState({
-        todos:[...filtered]
-      })
-    })
-  }
+  handleDelete = (e, todoId) => {
+    console.log(todoId);
+    axios
+      .delete(`http://localhost:5032/api/Todo/DeleteTodo?todoId=${todoId}`)
+      .then((res) => {
+        console.log(res);
+        let dataDB = [...this.state.todos];
+        const filtered = dataDB.filter((item) => item.todoId !== todoId);
+        this.setState({
+          todos: [...filtered],
+        });
+      });
+  };
 
   render() {
-    console.log(this.state.todos);
+    console.log(this.todos);
     return (
       <>
         <TopBar />
@@ -128,52 +132,12 @@ class TodoPage extends React.Component {
                   </Card.Body>
                 </Card>
 
-                {this.state.todos.length < 1 ? (
-                  <Card style={{ marginTop: "20px", marginBottom: "20px" }}>
-                    <Card.Body>
-                      <img
-                        src={defaultPost}
-                        style={{
-                          height: "150px",
-                          marginBottom: "10px",
-                          marginTop: "10px",
-                        }}
-                      />
-                      <br />
-                      <p style={{ textAlign: "center" }}>
-                        {" "}
-                        There are no Tasks here{" "}
-                      </p>
-                    </Card.Body>
-                  </Card>
-                ) : (
-                  this.state.todos.map((data) => (
-                    <Card style={{ marginTop: "20px", marginBottom: "20px" }} key={data.todoId}>
-                      <Card.Body>
-                        <div className="row">
-                          <div className="col-md-10">
-                            <h4>{data.todoName}</h4>
-                          </div>
-                          <div className="col-md-1">
-                            <Button
-                              style={{ float: "right" }}
-                              variant="primary"
-                              type="button"
-                            >
-                              <CheckSquareFill />
-                            </Button>
-                          </div>
-                          <div className="col-md-1">
-                            <Button variant="danger" type="button" onClick={(e)=>this.handleDelete(e,data.todoId)}>
-                              <TrashFill />
-                            </Button>
-                          </div>
-                        </div>
-                      </Card.Body>
-                    </Card>
-                  ))
-                )}
+                <TodoList
+                  todosDB={this.state.todos}
+                  handleDelete={this.handleDelete}
+                />
               </div>
+
             </div>
           </div>
         </div>

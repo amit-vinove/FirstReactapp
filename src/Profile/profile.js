@@ -6,6 +6,8 @@ import indexCss from "../css/index.css";
 import { Card , Button} from 'react-bootstrap'
 import profileImg from '../images/2474247.jpg'
 import axios from "axios";
+import { useSelector,useDispatch } from "react-redux";
+import { GetProfile } from "../Redux/Actions/todosActions";
 
 function ProfilePage() {
   const loggedUsername = localStorage.getItem('User')
@@ -18,6 +20,17 @@ function ProfilePage() {
     })
   },[])
 
+  const dispatch =useDispatch();
+  //single-way api-calling using redux
+  const profileDB = useSelector(
+    (state) => state.rootReducer.profileInfo
+  );
+
+  useEffect(() => {
+    dispatch(GetProfile(loggedUsername));
+   }, [])
+
+console.log(profileDB)
   return (
     <>
       <Navbar />
