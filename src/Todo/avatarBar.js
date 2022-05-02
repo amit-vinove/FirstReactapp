@@ -13,6 +13,7 @@ import {
   TrashFill,
   PencilSquare,
   CheckSquareFill,
+  XCircleFill,
   Search,
 } from "react-bootstrap-icons";
 
@@ -61,6 +62,11 @@ function AvatarPage() {
     (ele.name === name ? { ...ele, isSelected: true } : ele)))
     
   };
+  const remove=(e,name)=>{
+    setOptions(
+      option.map((ele)=>
+      (ele.name === name ? { ...ele, isSelected: false } : ele)))
+  }
   return (
     <>
       <TopBar />
@@ -140,6 +146,8 @@ function AvatarPage() {
                               <h4
                               >
                                 {data.name}
+                                 
+                                <XCircleFill type="button" onClick={(e)=>remove(e,data.name)} style={{marginLeft:'10px'}}/>
                               </h4>
                               </div>
                             )}
@@ -180,7 +188,7 @@ function AvatarPage() {
                                   marginLeft: "10px",
                                   lineHeight: "1.6",
                                 }}
-                              >
+                              > 
                                 <h4 className="av">{initials(data.name)}</h4>
                               </h4>
                               <h4
@@ -191,11 +199,11 @@ function AvatarPage() {
                               >
                                 {data.name}
                               </h4>
+                              <hr style={{ margin: "revert" }} />
                             </>
                           </div>
                           // <hr style={{ margin: "revert" }} />
                         )}
-                                                <hr style={{ margin: "revert" }} />
                       </div>
                     ))}
                   </Card.Body>
