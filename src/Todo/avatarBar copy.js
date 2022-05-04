@@ -31,8 +31,7 @@ function AvatarPage() {
   const colors = ["#0d46b7", "#d9004c", "#013220", "#ffc40c", "#008b8b"];
 
   const [username, setUsername] = useState(usernameDB);
-  const [inputVisible, setInputVisible] = useState(true);
-  const [selectVisible, setSelectVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
 
   const search = (e) => {
@@ -87,10 +86,6 @@ function AvatarPage() {
     );
   };
 
-  const handleStyle=(e)=>{
-    setInputVisible(false)
-    setSelectVisible(true)
-  }
   return (
     <>
       <TopBar />
@@ -142,16 +137,12 @@ function AvatarPage() {
               </Card>
 
               <div className="col-md-10">
-                {inputVisible && (
+                {visible && (
                   <Card className="selectDropdown">
                     <Card.Body style={{ padding: "8px" }}>
                       {username.map((data, i) => (
                         <div key={Math.random()}>
-                          <div
-                            className="col-md-12 select"
-                            style={{ display: "flex" }}
-                            onClick={(e)=>handleStyle(e)}
-                          >
+                          <div className="col-md-12 select" style={{ display: "flex" }} >
                             <h5
                               className="av"
                               style={{ background: `${colors[i % 5]}` }}
@@ -165,69 +156,6 @@ function AvatarPage() {
                           />
                         </div>
                       ))}
-                    </Card.Body>
-                  </Card>
-                )}
-                {selectVisible && (
-                  <Card
-                    style={{ marginTop: "20px", border: "1px solid #0d46b7" }}
-                  >
-                    <Card.Body>
-                      <div className="row">
-                        <div className="col-md-11">
-                          <div style={{ display: "flex" }}>
-                            {option.map((data) => (
-                              <div key={Math.random()}>
-                                {data.isSelected && (
-                                  <div className="tag">
-                                    <h5 style={{ color: "white" }}>
-                                      {data.name}
-
-                                      <XCircleFill
-                                        type="button"
-                                        onClick={(e) => remove(e, data.name)}
-                                        style={{
-                                          marginLeft: "10px",
-                                          fontSize: "18px",
-                                        }}
-                                      />
-                                    </h5>
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="col-md-1">
-                          <CaretDownFill
-                            type="button"
-                            style={{
-                              fontSize: "23px",
-                              float: "right",
-                              color: "dimgray",
-                            }}
-                          />
-                          <span
-                            style={{
-                              float: "right",
-                              marginLeft: "7px",
-                              marginRight: "4px",
-                            }}
-                          >
-                            |
-                          </span>
-                          <XCircleFill
-                            type="button"
-                            style={{
-                              fontSize: "18px",
-                              float: "right",
-                              marginTop: "3px",
-                              color: "dimgray",
-                            }}
-                            onClick={(e) => ClearSelected(e)}
-                          />
-                        </div>
-                      </div>
                     </Card.Body>
                   </Card>
                 )}
