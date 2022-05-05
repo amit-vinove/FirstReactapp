@@ -62,3 +62,10 @@
     max-height: 280px;
     overflow-y: auto;
 }
+/* [contentEditable=true]:empty:not(:focus):before{
+    content:attr(data-text)
+} */
+[contentEditable=true]:empty:before {
+    content:attr(data-text);
+    color:gray
+  }

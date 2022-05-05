@@ -34,6 +34,8 @@ function AvatarPage() {
   const [inputVisible, setInputVisible] = useState(true);
   const [selectVisible, setSelectVisible] = useState(false);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [text,setText]=useState("");
+ 
 
   const search = (e) => {
     const result = [...usernameDB].filter((name) =>
@@ -41,6 +43,7 @@ function AvatarPage() {
     );
     setUsername(result);
   };
+
 
   const initials = (username) => {
     return username
@@ -69,7 +72,15 @@ function AvatarPage() {
       )
     );
   };
-  console.log(option.filter((data) => data.isSelected == true));
+
+  const searchOptions = (e) => {
+    const result = [...optionsDB].filter((ele) =>
+      ele.name.toLowerCase().includes(e.toLowerCase())
+    );
+    setOptions(result);
+  };
+
+  // console.log(option.filter((data) => data.isSelected == true));
   // console.log(input.current.focus)
   const remove = (e, name) => {
     setOptions(
@@ -91,6 +102,7 @@ function AvatarPage() {
     setInputVisible(false)
     setSelectVisible(true)
   }
+ 
   return (
     <>
       <TopBar />
@@ -142,7 +154,6 @@ function AvatarPage() {
               </Card>
 
               <div className="col-md-10">
-                {inputVisible && (
                   <Card className="selectDropdown">
                     <Card.Body style={{ padding: "8px" }}>
                       {username.map((data, i) => (
@@ -167,82 +178,17 @@ function AvatarPage() {
                       ))}
                     </Card.Body>
                   </Card>
-                )}
-                {selectVisible && (
-                  <Card
-                    style={{ marginTop: "20px", border: "1px solid #0d46b7" }}
-                  >
-                    <Card.Body>
-                      <div className="row">
-                        <div className="col-md-11">
-                          <div style={{ display: "flex" }}>
-                            {option.map((data) => (
-                              <div key={Math.random()}>
-                                {data.isSelected && (
-                                  <div className="tag">
-                                    <h5 style={{ color: "white" }}>
-                                      {data.name}
-
-                                      <XCircleFill
-                                        type="button"
-                                        onClick={(e) => remove(e, data.name)}
-                                        style={{
-                                          marginLeft: "10px",
-                                          fontSize: "18px",
-                                        }}
-                                      />
-                                    </h5>
-                                  </div>
-                                )}
-                              </div>
-                            ))}
-                          </div>
-                        </div>
-                        <div className="col-md-1">
-                          <CaretDownFill
-                            type="button"
-                            style={{
-                              fontSize: "23px",
-                              float: "right",
-                              color: "dimgray",
-                            }}
-                          />
-                          <span
-                            style={{
-                              float: "right",
-                              marginLeft: "7px",
-                              marginRight: "4px",
-                            }}
-                          >
-                            |
-                          </span>
-                          <XCircleFill
-                            type="button"
-                            style={{
-                              fontSize: "18px",
-                              float: "right",
-                              marginTop: "3px",
-                              color: "dimgray",
-                            }}
-                            onClick={(e) => ClearSelected(e)}
-                          />
-                        </div>
-                      </div>
-                    </Card.Body>
-                  </Card>
-                )}
               </div>
             </div>
 
+
+{/* -------Multi Select Bar Page --------------- */}
             <div className="container" style={{ padding: "20px" }}>
               <h5 style={{ fontWeight: "400" }}>Multi Select Bar Page</h5>
               <div className="col-md-10">
                 <Card
                   style={{ marginTop: "20px", border: "1px solid #0d46b7" }}
-                  onClick={(e) =>
-                    !dropdownVisible
-                      ? setDropdownVisible(true)
-                      : setDropdownVisible(false)
+                  onClick={(e) =>setDropdownVisible(true)
                   }
                 >
                   <Card.Body>
@@ -266,9 +212,10 @@ function AvatarPage() {
                                     />
                                   </h5>
                                 </div>
-                              )}
+                              )} 
                             </div>
                           ))}
+                          <h6 contenteditable='true' style={{outline:'0px'}} data-text ="Search Here"  onInput={(e)=>{searchOptions(e.currentTarget.textContent)}}></h6>
                         </div>
                       </div>
                       <div className="col-md-1">
@@ -344,6 +291,9 @@ function AvatarPage() {
                 </div>
               )}
             </div>
+
+
+
           </div>
         </div>
       </div>
