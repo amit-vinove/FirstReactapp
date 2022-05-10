@@ -27,12 +27,23 @@ function AvatarPage() {
     "Pradeep Verma",
     "Sarthak Sharma",
   ];
+  const optionsDB = [
+    { name: "Amit Kumar", isSelected: false },
+    { name: "Arun Sharma", isSelected: false },
+    { name: "Vikas Kumar", isSelected: false },
+    { name: "Manoj Singh", isSelected: false },
+    { name: "Pradeep Verma", isSelected: false },
+    { name: "Sarthak Sharma", isSelected: false },
+  ];
 
   const colors = ["#0d46b7", "#d9004c", "#013220", "#ffc40c", "#008b8b"];
 
   const [username, setUsername] = useState(usernameDB);
-  const [visible, setVisible] = useState(false);
+  const [inputVisible, setInputVisible] = useState(true);
+  const [selectVisible, setSelectVisible] = useState(false);
+  const [dropdown, setDropdown] = useState(optionsDB);
   const [dropdownVisible, setDropdownVisible] = useState(false);
+  const [text, setText] = useState([]);
 
   const search = (e) => {
     const result = [...usernameDB].filter((name) =>
@@ -50,42 +61,60 @@ function AvatarPage() {
       .toUpperCase();
   };
 
-  const optionsDB = [
-    { name: "Amit Kumar", isSelected: false },
-    { name: "Arun Sharma", isSelected: false },
-    { name: "Vikas Kumar", isSelected: false },
-    { name: "Manoj Singh", isSelected: false },
-    { name: "Pradeep Verma", isSelected: false },
-    { name: "Sarthak Sharma", isSelected: false },
-  ];
   const [option, setOptions] = useState(optionsDB);
 
   const Select = (e, name) => {
     console.log(name);
+    setText([...text, name]);
     setOptions(
-      option.map((ele) =>
+      option.map((data) =>
+        data.name === name ? { ...data, isSelected: true } : data
+      )
+    );
+    setDropdown(
+      dropdown.map((ele) =>
         ele.name === name ? { ...ele, isSelected: true } : ele
       )
     );
   };
-  console.log(option.filter((data) => data.isSelected == true));
+
+  const searchOptions = (e) => {
+    const result = [...option].filter(
+      (ele) =>
+        ele.name.toLowerCase().includes(e.toLowerCase()) &&
+        ele.isSelected === false
+    );
+    setDropdown(result);
+  };
+
+  // console.log(option.filter((data) => data.isSelected == true));
   // console.log(input.current.focus)
   const remove = (e, name) => {
+    const temp = text.filter((data, i) => data !== name);
+    setText(temp);
     setOptions(
-      option.map((ele) =>
+      option.map((data) =>
+        data.name === name ? { ...data, isSelected: false } : data
+      )
+    );
+    setDropdown(
+      dropdown.map((ele) =>
         ele.name === name ? { ...ele, isSelected: false } : ele
       )
     );
   };
+  // console.log(text)
 
   const ClearSelected = (e) => {
-    setOptions(
-      option.map((ele) =>
-        ele.isSelected == true ? { ...ele, isSelected: false } : ele
-      )
-    );
+    setText([]);
+    setDropdown(optionsDB);
+    setOptions(optionsDB);
   };
 
+  const handleStyle = (e) => {
+    setInputVisible(false);
+    setSelectVisible(true);
+  };
   return (
     <>
       <TopBar />
@@ -95,7 +124,7 @@ function AvatarPage() {
             <Sidebar />
           </div>
           <div className="col-md-11">
-            <div className="container" style={{ padding: "20px" }}>
+            {/* <div className="container" style={{ padding: "20px" }}>
               <h5 style={{ fontWeight: "400" }}>Avatar Bar Page</h5>
               <Card style={{ marginTop: "20px" }}>
                 <Card.Body>
@@ -137,56 +166,53 @@ function AvatarPage() {
               </Card>
 
               <div className="col-md-10">
-                {visible && (
-                  <Card className="selectDropdown">
-                    <Card.Body style={{ padding: "8px" }}>
-                      {username.map((data, i) => (
-                        <div key={Math.random()}>
-                          <div className="col-md-12 select" style={{ display: "flex" }} >
-                            <h5
-                              className="av"
-                              style={{ background: `${colors[i % 5]}` }}
-                            >
-                              {initials(data)}
-                            </h5>
-                            <h5 className="avText">{data}</h5>
-                          </div>
-                          <hr
-                            style={{ marginTop: "1px", marginBottom: "5px" }}
-                          />
+                <Card className="selectDropdown">
+                  <Card.Body style={{ padding: "8px" }}>
+                    {username.map((data, i) => (
+                      <div key={Math.random()}>
+                        <div
+                          className="col-md-12 select"
+                          style={{ display: "flex" }}
+                          onClick={(e) => handleStyle(e)}
+                        >
+                          <h5
+                            className="av"
+                            style={{ background: `${colors[i % 5]}` }}
+                          >
+                            {initials(data)}
+                          </h5>
+                          <h5 className="avText">{data}</h5>
                         </div>
-                      ))}
-                    </Card.Body>
-                  </Card>
-                )}
+                        <hr style={{ marginTop: "1px", marginBottom: "5px" }} />
+                      </div>
+                    ))}
+                  </Card.Body>
+                </Card>
               </div>
-            </div>
+            </div> */}
+
+            {/* -------Multi Select Bar Page --------------- */}
 
             <div className="container" style={{ padding: "20px" }}>
               <h5 style={{ fontWeight: "400" }}>Multi Select Bar Page</h5>
               <div className="col-md-10">
                 <Card
                   style={{ marginTop: "20px", border: "1px solid #0d46b7" }}
-                  onClick={(e) =>
-                    !dropdownVisible
-                      ? setDropdownVisible(true)
-                      : setDropdownVisible(false)
-                  }
+                  onClick={(e) => setDropdownVisible(true)}
                 >
-                  <Card.Body>
+                  <Card.Body style={{ padding: "10px" }}>
                     <div className="row">
                       <div className="col-md-11">
                         <div style={{ display: "flex" }}>
-                          {option.map((data) => (
+                          {text.map((data) => (
                             <div key={Math.random()}>
-                              {data.isSelected && (
+                              {data && (
                                 <div className="tag">
-                                  <h5 style={{ color: "white" }}>
-                                    {data.name}
-
+                                  <h5>
+                                    {data}
                                     <XCircleFill
                                       type="button"
-                                      onClick={(e) => remove(e, data.name)}
+                                      onClick={(e) => remove(e, data)}
                                       style={{
                                         marginLeft: "10px",
                                         fontSize: "18px",
@@ -197,16 +223,20 @@ function AvatarPage() {
                               )}
                             </div>
                           ))}
+                          <h6
+                            contenteditable="true"
+                            style={{ outline: "0px", marginTop: "8px" }}
+                            data-text="Search here..."
+                            onInput={(e) => {
+                              searchOptions(e.currentTarget.textContent);
+                            }}
+                          ></h6>
                         </div>
                       </div>
-                      <div className="col-md-1">
+                      <div className="col-md-1" style={{ marginTop: "8px" }}>
                         <CaretDownFill
                           type="button"
-                          style={{
-                            fontSize: "23px",
-                            float: "right",
-                            color: "dimgray",
-                          }}
+                          className="caret"
                           onClick={(e) =>
                             !dropdownVisible
                               ? setDropdownVisible(true)
@@ -224,12 +254,7 @@ function AvatarPage() {
                         </span>
                         <XCircleFill
                           type="button"
-                          style={{
-                            fontSize: "18px",
-                            float: "right",
-                            marginTop: "3px",
-                            color: "dimgray",
-                          }}
+                          className="xCircle"
                           onClick={(e) => ClearSelected(e)}
                         />
                       </div>
@@ -241,7 +266,7 @@ function AvatarPage() {
                 <div className="col-md-10">
                   <Card className="selectDropdown">
                     <Card.Body style={{ padding: "8px" }}>
-                      {option.map((data, i) => (
+                      {dropdown.map((data, i) => (
                         <div key={Math.random()}>
                           {!data.isSelected && (
                             <div

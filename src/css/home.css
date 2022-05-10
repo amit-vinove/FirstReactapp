@@ -38,15 +38,15 @@
 }
 .select:hover .avText{
     color: white !important;
-    }
-
-.tag{
-    background-color: #dbd8d8;
-    padding: 5px;
-    margin-left: 5px;
-    margin-right: 5px;
-    border-radius: 5px;
 }
+
+.tag:hover{
+    background-color: #3ba2ff;
+}
+.tag:hover > h5{
+    color: white !important;
+}
+
 .searchDropdown{
     width: 97%;
     margin-left: 17px;
@@ -69,3 +69,20 @@
     content:attr(data-text);
     color:gray
   }
+.caret{
+    font-size: 23px;
+    float: right;
+    color: dimgray;
+}
+.caret:hover{
+    color: black;
+}
+.xCircle{
+    font-size: 18px;
+    float: right;
+    margin-top: 3px;
+    color: dimgray;
+}
+.xCircle:hover{
+    color: black;
+}
