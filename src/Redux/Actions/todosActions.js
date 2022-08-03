@@ -2,12 +2,13 @@ import axios from "axios";
 import {
     GetTodos_Success,GetTodos_Fail, GetProfile_Fail, GetProfile_Success
 } from "../Constants/constants"
+
 const listTodos = (username) => {
     return async (dispatch) => {
         try {
             const res = await axios({
                 method: 'get',
-                url: `http://localhost:5032/api/Todo/GetTodoByUsername?username=${username}`,
+                url: `http://localhost:5032/api/Todo`,
             });
             const  data  = res.data;
             if (data) {

@@ -1,0 +1,20 @@
+
+[contentEditable=true]:empty:before {
+    content:attr(data-text);
+    color:gray
+  }
+.caret{
+    float: right;
+    color: dimgray;
+}
+.caret:hover{
+    color: black;
+}
+.xCircle{
+    float: right;
+    margin-top: 3px;
+    color: dimgray;
+}
+.xCircle:hover{
+    color: black;
+}

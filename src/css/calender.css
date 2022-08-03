@@ -1,0 +1,50 @@
+.calenderHead{
+    padding: 10px;
+    display: flex;
+}
+.calenderDiv{
+    display: block;
+    margin: 0 auto;
+    background-color: white;
+}
+.daysDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 10px;
+  
+}
+.hr{
+    margin-top: unset;
+    margin-bottom: unset;
+}
+.datesDiv{
+    display: grid;
+    grid-template-columns: 137px 137px 137px 137px 137px 137px 137px;
+}
+.dates{
+    padding: 20px;
+    border: 1px solid #0000001a;
+}
+.dtText{
+    float: right;
+}
+.before{
+    color:grey;
+    float: right;
+}
+.todayDt{
+    color: white;
+    float: right;
+    background: red;
+    border-radius: 50%;
+    padding: 5px;
+    margin-bottom: unset;
+}
+.mthButton{
+    display: block;
+    margin-left: auto;
+}
+.todayMth{
+    font-weight: 500;
+}

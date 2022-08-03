@@ -14,137 +14,187 @@ import {
   PencilSquare,
   CheckSquareFill,
 } from "react-bootstrap-icons";
-import TodoList from "./todoList";
-import { listTodos } from "../Redux/Actions/todosActions";
-import { useDispatch, useSelector } from "react-redux";
 
-class TodoPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      addTodoValue: "",
-      todos: [],
+function TodoPage() {
+  const [todo, setTodos] = useState("");
+  const [todosDB, setTodosDB] = useState([]);
+  const [style, setTodoStyle] = useState("todoStyle");
+
+  const handleSubmit = (e) => {
+    const username = localStorage.getItem("User");
+    e.preventDefault();
+    let todoData = {
+      todoId: 0,
+      todoName: todo,
+      userId: 1,
+      username: '1',
     };
-  }
-  username = localStorage.getItem("User");
+    axios
+      .post("http://localhost:5032/api/Todo/AddTodo", todoData)
+      .then((res) => {
+        const data = res;
+        console.log(data);
+        e.preventDefault();
+        let obj = [...todosDB];
+        obj.push(res.data);
+        setTodosDB(obj);
+        e.target.reset();
+      })
+      .catch((err) => console.log(err));
+  };
 
-  componentDidMount() {
+  useEffect(() => {
+    const username = localStorage.getItem("User");
     axios
       .get(
-        `http://localhost:5032/api/Todo/GetTodoByUsername?username=${this.username}`
+        `http://localhost:5032/api/Todo`
       )
-      .then((res) => {
-        console.log(res);
-        this.setState({
-          todos: [...this.state.todos, ...res.data],
-        });
+      .then((response) => {
+        setTodosDB(response.data);
       });
-  }
+  }, []);
+  console.log(todosDB);
 
-  handleChange = (e) => {
-    this.setState({
-      ...this.state,
-      addTodoValue: e.target.value,
-    });
-  };
-
-  addNewTodo = (e, value) => {
-    e.preventDefault();
-
-    if (value) {
-      let todoData = {
-        todoId: 0,
-        todoName: value,
-        userId: 0,
-        username: this.username,
-      };
-      axios
-        .post("http://localhost:5032/api/Todo/AddTodo", todoData)
-        .then((res) => {
-          console.log(res);
-          this.setState({
-            ...this.state,
-            todos: [...this.state.todos, res.data],
-          });
-        })
-        .catch((err) => console.log(err));
-    } else {
-      console.log("Please Add Todo");
-    }
-  };
-
-  handleDelete = (e, todoId) => {
-    console.log(todoId);
+  const handleDelete = (todoId) => {
     axios
       .delete(`http://localhost:5032/api/Todo/DeleteTodo?todoId=${todoId}`)
-      .then((res) => {
-        console.log(res);
-        let dataDB = [...this.state.todos];
+      .then((response) => {
+        console.log(response);
+        let dataDB = [...todosDB];
         const filtered = dataDB.filter((item) => item.todoId !== todoId);
-        this.setState({
-          todos: [...filtered],
-        });
+        setTodosDB(filtered);
+        // console.log(filtered)
       });
   };
 
+  const todoChecked = (todoId, checked) => {
+    if (checked == true) {
+      var check = false;
+    } else {
+      check = true;
+    }
+    axios
+      .put(
+        `http://localhost:5032/api/Todo/CheckTodo?checkTodo=${check}&todoId=${todoId}`
+      )
+      .then((response) => {
+        var todos = response.data.data;
+        setTodosDB(todos);
+        //  console.log(todos)
+      });
+  };
 
-  render() {
-    console.log(this.todos);
-    return (
-      <>
-        <TopBar />
-        <div className="container-fluid">
-          <div className="row">
-            <div className="col-md-1 sideNav">
-              <Sidebar />
-            </div>
-            <div className="col-md-11">
-              <div className="container" style={{ padding: "20px" }}>
-                <h5 style={{ fontWeight: "400" }}>To-Do Tasks</h5>
+  return (
+    <>
+      <TopBar />
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-md-1 sideNav">
+            <Sidebar />
+          </div>
+          <div className="col-md-11">
+            <div className="container" style={{ padding: "20px" }}>
+              <h5 style={{ fontWeight: "400" }}>To-Do Tasks</h5>
+              <Card style={{ marginTop: "20px", marginBottom: "20px" }}>
+                <Card.Body>
+                  <Form onSubmit={handleSubmit}>
+                    <Form.Group
+                      className="mb-1"
+                      controlId="exampleForm.ControlTextarea1"
+                    >
+                      <Form.Control
+                        onChange={(e) => {
+                          setTodos(e.target.value);
+                        }}
+                        placeholder="Add Your Tasks here..."
+                        as="textarea"
+                        rows={3}
+                      />
+                    </Form.Group>
+                    <Button
+                      onSubmit={handleSubmit}
+                      variant="primary"
+                      style={{
+                        float: "right",
+                        width: "120px",
+                        fontSize: "16px",
+                      }}
+                      type="submit"
+                    >
+                      <PlusSquare /> Add Todo
+                    </Button>
+                  </Form>
+                </Card.Body>
+              </Card>
+
+              {todosDB.length < 1 ? (
                 <Card style={{ marginTop: "20px", marginBottom: "20px" }}>
                   <Card.Body>
-                    <Form>
-                      <Form.Group
-                        className="mb-1"
-                        controlId="exampleForm.ControlTextarea1"
-                      >
-                        <Form.Control
-                          placeholder="Add Your Tasks here..."
-                          as="textarea"
-                          rows={3}
-                          onChange={(e) => this.handleChange(e)}
-                        />
-                      </Form.Group>
-                      <Button
-                        variant="primary"
-                        style={{
-                          float: "right",
-                          width: "120px",
-                          fontSize: "16px",
-                        }}
-                        type="submit"
-                        onClick={(e) =>
-                          this.addNewTodo(e, this.state.addTodoValue)
-                        }
-                      >
-                        <PlusSquare /> Add Todo
-                      </Button>
-                    </Form>
+                    <img
+                      src={defaultPost}
+                      style={{
+                        height: "150px",
+                        marginBottom: "10px",
+                        marginTop: "10px",
+                      }}
+                    />
+                    <br />
+                    <p style={{ textAlign: "center" }}>
+                      {" "}
+                      There are no Tasks here{" "}
+                    </p>
                   </Card.Body>
                 </Card>
-
-                <TodoList
-                  todosDB={this.state.todos}
-                  handleDelete={this.handleDelete}
-                />
-              </div>
-
+              ) : (
+                todosDB.map((data) => (
+                  <Card
+                    key={data.todoId}
+                    style={{ marginTop: "20px", marginBottom: "20px" }}
+                  >
+                    <Card.Body>
+                      <div className="row">
+                        <div className="col-md-10">
+                          <h4
+                            className={
+                              data.checked ? "todoStyleChecked" : style
+                            }
+                          >
+                            {" "}
+                            {data.todoName}{" "}
+                          </h4>
+                        </div>
+                        <div className="col-md-1">
+                          <Button
+                            style={{ float: "right" }}
+                            variant="primary"
+                            type="button"
+                            onClick={() =>
+                              todoChecked(data.todoId, data.checked)
+                            }
+                          >
+                            <CheckSquareFill />
+                          </Button>
+                        </div>
+                        <div className="col-md-1">
+                          <Button
+                            onClick={() => handleDelete(data.todoId)}
+                            variant="danger"
+                            type="button"
+                          >
+                            <TrashFill />
+                          </Button>
+                        </div>
+                      </div>
+                    </Card.Body>
+                  </Card>
+                ))
+              )}
             </div>
           </div>
         </div>
-      </>
-    );
-  }
+      </div>
+    </>
+  );
 }
 
 export default TodoPage;

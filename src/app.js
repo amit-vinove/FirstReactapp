@@ -10,6 +10,12 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import EmployeePage from "./Employee/employee";
 import TeamsPage from "./Teams/teams";
 import AvatarPage from "./Todo/avatarBar";
+import Accordian from "./Todo/accordian";
+import Calender from "./Todo/calender";
+import MultistepForm from "./Todo/multistepForm";
+import ReactLearn from "./Todo/reactLearn"
+import UseEffectExample from "./Todo/useEffectEx";
+import UseRefEx from "./Todo/useRefEx";
 
 function getAuth() {
   const loggedIn = localStorage.getItem("LoggedIn");
@@ -35,9 +41,9 @@ function App() {
         <Route
           path="/home"
           element={
-            <RequireAuth redirectTo="/">
+            // <RequireAuth redirectTo="/">
               <HomePage />
-            </RequireAuth>
+            // </RequireAuth>
           }
         />
       </Routes>
@@ -84,6 +90,54 @@ function App() {
           path="/avatarPage"
           element={              
           <AvatarPage />
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/accordian"
+          element={              
+          <Accordian />
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/calender"
+          element={              
+          <Calender />
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/multiStepForm"
+          element={              
+          <MultistepForm />
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/reactLearn"
+          element={              
+          <ReactLearn />
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/useEffect"
+          element={              
+          <UseEffectExample />
+          }
+        />
+      </Routes>
+      <Routes>
+        <Route
+          path="/useRef"
+          element={              
+          <UseRefEx />
           }
         />
       </Routes>

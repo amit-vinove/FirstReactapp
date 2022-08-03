@@ -32,7 +32,7 @@ function TeamsPage() {
     );
     setSearchvalues(result);
     console.log(searchvalues);
-  };
+  }; 
 
   return (
     <>

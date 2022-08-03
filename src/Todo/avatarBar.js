@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import Sidebar from "../navBar/sidebar";
-import TopBar from "../navBar/topBar";
-import MultiSelectbar from "./multiSelectBar";
+
+import MultiSelectBar from "multiselectbar";
+
 
 function AvatarPage() {
   const usernameDB = [
@@ -25,20 +25,20 @@ function AvatarPage() {
 
   return (
     <>
-      <TopBar />
+      {/* <TopBar /> */}
       <div className="container-fluid">
         <div className="row">
           <div className="col-md-1 sideNav">
-            <Sidebar />
+            {/* <Sidebar /> */}
           </div>
           <div className="col-md-11">
             {/* -------Multi Select Bar Page --------------- */}
             <div className="container" style={{ padding: "20px" }}>
               <h5 style={{ fontWeight: "400" }}>Multi Select Bar Page</h5>
               <div className="col-md-10" style={{marginTop:'20px'}}>
-                <MultiSelectbar
-                  colorsDB={colorsDB}
-                  optionsDB={optionsDB}
+                <MultiSelectBar
+                  colors={colorsDB}
+                  options={optionsDB}
                   borderColor = '#0d46b7'
                   tagColor='#dbd8d8'
                   tagTextColor='black'
@@ -46,10 +46,14 @@ function AvatarPage() {
                   tagHoverTextColor='white'
                   tagTextSize='20px'
                   tagCrossSize = '18px'
-                  placeholder='Search Contacts...'
+                  placeholder='Search here...'
                   placeholderSize = '18px'
                   listTextSize = '21px'
                   listHoverColor = '#147fdc'
+                  dropdownHeight = '280px'
+                  dropdownMarginTop = '1px'
+                  inputCrossSize = '18px'
+                  inputDropSize = '23px'
                 />
               </div>
             </div>

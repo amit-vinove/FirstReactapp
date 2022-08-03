@@ -1,0 +1,28 @@
+.accDiv{
+    display: block;
+    margin: 0 auto;
+    color: black;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.accHead{
+    background-color: gray;
+    padding: 8px;
+    display: flex;
+    justify-content: space-between;
+}
+.accBody{
+    box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+    background-color: white;
+    height: 0;
+    overflow: hidden;
+    transition: height 0.3s linear;
+    
+}
+.accBodyShow{
+    box-shadow: rgb(149 157 165 / 20%) 0px 8px 24px;
+    background-color: white;
+    height: 100px;
+    overflow: hidden;
+    transition: height 0.3s linear;
+}

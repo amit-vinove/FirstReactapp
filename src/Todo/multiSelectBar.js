@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-
 import Card from "react-bootstrap/Card";
 import { XCircleFill, CaretDownFill } from "react-bootstrap-icons";
 import styled from "styled-components";
+import multiselectBarCss from "../css/multiselectBar.css";
 
 function MultiSelectbar({
   colorsDB,
@@ -17,7 +17,11 @@ function MultiSelectbar({
   placeholder,
   placeholderSize,
   listTextSize,
-  listHoverColor
+  listHoverColor,
+  dropdownHeight,
+  dropdownMarginTop,
+  inputCrossSize,
+  inputDropSize,
 }) {
   const [dropdown, setDropdown] = useState(optionsDB);
   const [dropdownVisible, setDropdownVisible] = useState(false);
@@ -66,7 +70,7 @@ function MultiSelectbar({
     display: flex !important;
     padding: 3px;
     &:hover {
-      background-color: ${listHoverColor ? listHoverColor :'#147fdc'};
+      background-color: ${listHoverColor ? listHoverColor : "#147fdc"};
       cursor: pointer;
       color: white !important;
       border-radius: 4px;
@@ -134,7 +138,11 @@ function MultiSelectbar({
             border: "1px solid",
             borderColor: `${borderColor ? borderColor : "#0d46b7"}`,
           }}
-          onClick={(e) => setDropdownVisible(true)}
+          onClick={(e) =>
+            !dropdownVisible
+              ? setDropdownVisible(true)
+              : setDropdownVisible(false)
+          }
         >
           <Card.Body style={{ padding: "10px" }}>
             <div className="row">
@@ -178,6 +186,9 @@ function MultiSelectbar({
               <div className="col-md-1" style={{ marginTop: "8px" }}>
                 <CaretDownFill
                   type="button"
+                  style={{
+                    fontSize: `${inputDropSize ? inputDropSize : "23px"}`,
+                  }}
                   className="caret"
                   onClick={(e) =>
                     !dropdownVisible
@@ -196,6 +207,9 @@ function MultiSelectbar({
                 </span>
                 <XCircleFill
                   type="button"
+                  style={{
+                    fontSize: `${inputCrossSize ? inputCrossSize : "18px"}`,
+                  }}
                   className="xCircle"
                   onClick={(e) => ClearSelected(e)}
                 />
@@ -206,7 +220,14 @@ function MultiSelectbar({
       </div>
       {dropdownVisible && (
         <div>
-          <Card className="selectDropdown">
+          <Card
+            style={{
+              width: "100%",
+              marginTop: `${dropdownMarginTop ? dropdownMarginTop : "1px"}`,
+              maxHeight: `${dropdownHeight ? dropdownHeight : "280px"}`,
+              overflowY: "auto",
+            }}
+          >
             <Card.Body style={{ padding: "8px" }}>
               {dropdown.map((data, i) => (
                 <div key={Math.random()}>
