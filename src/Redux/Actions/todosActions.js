@@ -20,10 +20,10 @@ const listTodos = (username) => {
         }
         catch (error) {
             console.log(error);
-            if (error.reponse) {
+            if (error.response) {
                 dispatch({
                     type: GetTodos_Fail,
-                    payload: error.reponse.data.message,
+                    payload: error.response.data.message,
                 });
             }
         }

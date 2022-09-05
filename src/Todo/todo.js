@@ -14,11 +14,14 @@ import {
   PencilSquare,
   CheckSquareFill,
 } from "react-bootstrap-icons";
+import useLocalStorage from "./useLocalStorage";
 
 function TodoPage() {
   const [todo, setTodos] = useState("");
   const [todosDB, setTodosDB] = useState([]);
   const [style, setTodoStyle] = useState("todoStyle");
+
+  const [name,setName] = useLocalStorage('name','')
 
   const handleSubmit = (e) => {
     const username = localStorage.getItem("User");
@@ -104,10 +107,11 @@ function TodoPage() {
                     >
                       <Form.Control
                         onChange={(e) => {
-                          setTodos(e.target.value);
+                          setName(e.target.value);
                         }}
-                        placeholder="Add Your Tasks here..."
+                        // placeholder="Add Your Tasks here..."
                         as="textarea"
+                        value={name}
                         rows={3}
                       />
                     </Form.Group>

@@ -79,7 +79,7 @@ console.log(todos);
                 }}
               />
               <br />
-              <p style={{ textAlign: "center" }}>
+              <p style={{ textAlign: "center" }}> 
                 {" "}
                 There are no announcements here{" "}
               </p>
